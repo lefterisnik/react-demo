@@ -30,4 +30,4 @@ Run this to get the latest:
 
 ## Run with docker
 
-   - `docker run -it -v <full_path of the your direcotry:/srv/react-demo/ -p 8080:8080 -p 8000:8000 reactdemo`
+   - `docker run -it -v <full_path of the your direcotry>:/srv/react-demo/ -p 8080:8080 -p 8000:8000 reactdemo`
