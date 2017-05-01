@@ -71,7 +71,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'ember_demo.wsgi.application'
+WSGI_APPLICATION = 'react_demo.wsgi.application'
 
 
 # Database
