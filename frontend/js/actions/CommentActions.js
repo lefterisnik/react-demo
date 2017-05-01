@@ -12,7 +12,7 @@ const CommentActions = {
       log,
     });
   },
-  
+
 };
 
 export default CommentActions;

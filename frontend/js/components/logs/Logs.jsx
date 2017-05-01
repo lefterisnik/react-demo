@@ -3,6 +3,9 @@
 import React from 'react';
 import Immutable from 'immutable';
 import LogActions from '../../actions/LogActions';
+import {Card, CardTitle, CardActions, CardHeader, CardText} from 'material-ui/Card';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
 import Log from './subcomponents/Log';
 
 class Logs extends React.Component {
@@ -21,12 +24,12 @@ class Logs extends React.Component {
       id: this.state.counter,
       username: 'lefterisnik',
       added: '1 minute before',
-      title: this.refs.title.value,
-      entry: this.refs.entry.value,
+      title: this.refs.title.getValue(),
+      entry: this.refs.entry.getValue(),
     });
 
-    this.refs.title.value = null;
-    this.refs.entry.value = null;
+    this.refs.title.input.value = null;
+    this.refs.entry.input.value = null;
 
     this.setState(prevState => ({
       counter: prevState.counter + 1
@@ -38,18 +41,48 @@ class Logs extends React.Component {
       <Log key={ x.id } log={ x } />
     );
 
+    const textFieldStyle = {
+      "marginLeft": "10px"
+    }
+
+    const raisedButtonStyle = {
+      "marginLeft": "10px"
+    }
+
     return (
       <section>
-        <h2>Welcome</h2>
-        <h4>Here the logs</h4>
-        <hr />
-        <form onSubmit={ this.handleSubmitForm }>
-          Title: <input type="text" name="title" ref="title" />
-          Entry: <input type="text" name="entry" ref="entry" />
-          <input type="submit" value="Add log" />
-        </form>
-        <hr />
-        { logs }
+        <Card initiallyExpanded={ true }>
+          <CardTitle
+            title="Welcome"
+            subtitle="Here the logs"
+            actAsExpander={ true }
+            showExpandableButton={ true }
+          />
+          <CardActions>
+            <form onSubmit={ this.handleSubmitForm }>
+              <TextField
+                hintText="Title"
+                floatingLabelText="Title"
+                ref="title"
+                style={ textFieldStyle }
+              />
+              <TextField
+                hintText="Entry"
+                floatingLabelText="Entry"
+                ref="entry"
+                style={ textFieldStyle }
+              />
+              <RaisedButton
+                label="Add log"
+                type="submit"
+                style={ raisedButtonStyle }
+              />
+            </form>
+          </CardActions>
+          <CardText expandable={ true }>
+            { logs }
+          </CardText>
+        </Card>
       </section>
     );
   }

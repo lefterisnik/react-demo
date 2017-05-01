@@ -3,6 +3,10 @@
 import React from 'react';
 import LogActions from '../../../actions/LogActions';
 import CommentActions from '../../../actions/CommentActions';
+import {Card, CardTitle, CardActions, CardHeader, CardText} from 'material-ui/Card';
+import TextField from 'material-ui/TextField';
+import Divider from 'material-ui/Divider';
+import RaisedButton from 'material-ui/RaisedButton';
 import CommentsContainer from '../../comments/CommentsContainer';
 
 class Log extends React.Component {
@@ -18,19 +22,19 @@ class Log extends React.Component {
 
   handleDeleteButton(e) {
     e.preventDefault();
-    LogActions.delete(this.props.log.id);
+    LogActions.delete(this.props.log.get('id'));
   }
 
   handleSubmitForm(e) {
-    e.preventDefault();
+    e.preventDefault()
     CommentActions.add(this.props.log, {
       id: this.state.counter,
       username: 'lefterisnik',
       added: '1 minute before',
-      comment: this.refs.comment.value,
+      comment: this.refs.comment.getValue(),
     })
 
-    this.refs.comment.value = null;
+    this.refs.comment.input.value = null;
 
     this.setState(prevState => ({
       counter: prevState.counter + 1
@@ -38,22 +42,47 @@ class Log extends React.Component {
   }
 
   render() {
+    const textFieldStyle = {
+      "marginLeft": "10px"
+    }
+
+    const raisedButtonStyle = {
+      "marginLeft": "10px"
+    }
+
     return (
-      <div style={{ border: "1px solid #d3d3e3", padding: "10px", marginTop: "20px" }}>
-        <h4>{ this.props.log.title }</h4>
-        <p>{ this.props.log.entry }</p>
-        <small>by { this.props.log.username }</small>
-        <hr/>
-        <button onClick={ this.handleDeleteButton }>Delete log</button>
-        <hr/>
-        <h4>Here the logs comments</h4>
-        <form onSubmit={ this.handleSubmitForm }>
-          Comment: <input type="text" name="title" ref="comment" />
-          <input type="submit" value="Add comment" />
-        </form>
-        <CommentsContainer log={ this.props.log }/>
-        <hr />
-      </div>
+      <Card initiallyExpanded={ true }>
+        <CardTitle
+          title={ this.props.log.title }
+          subtitle={ this.props.log.entry }
+          actAsExpander={ true }
+          showExpandableButton={ true }
+        />
+        <Divider />
+        <CardActions>
+          <RaisedButton
+            label="Delete log"
+            onClick={ this.handleDeleteButton }
+          />
+          <br/>
+          <form onSubmit={ this.handleSubmitForm }>
+            <TextField
+              hintText="Comment"
+              floatingLabelText="Comment"
+              ref="comment"
+              style={ textFieldStyle }
+            />
+            <RaisedButton
+              label="Add comment"
+              type="submit"
+              style={ raisedButtonStyle }
+            />
+          </form>
+        </CardActions>
+        <CardText expandable={ true }>
+          <CommentsContainer log={ this.props.log }/>
+        </CardText>
+      </Card>
     )
   }
 
