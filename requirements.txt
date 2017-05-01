@@ -1,0 +1,8 @@
+django
+djangorestframework
+djangorestframework-jsonapi
+django-rest-swagger
+drf-nested-routers
+django-cors-headers
+channels
+faker
